@@ -21,10 +21,18 @@ namespace EADBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Station>> getStations()
+        public async Task<IActionResult> getStations()
         {
-            return await _stationServices.GetstationsAsync();
+            //return await _stationServices.GetstationsAsync();
 
+            List<Station> stationlist = await _stationServices.GetstationsAsync();
+            if (stationlist != null)
+            {
+                return Ok(new { success = true, data = stationlist, msg = "data retrive success" });
+            }
+            else {
+                return BadRequest(new { success = true, data = stationlist, msg = "data retrive failed " });
+            }
         }
 
         [HttpPost]
@@ -73,7 +81,7 @@ namespace EADBackend.Controllers
         public async Task<IActionResult> updateDeQuque(string id, string quque, [FromBody] Station station)
         {
             await _stationServices.DecrementququeAsync(id, quque, station);
-            return NoContent();
+            return Ok(new { success = true, data = id, msg = "data updated success" });
 
         }
 
@@ -83,14 +91,40 @@ namespace EADBackend.Controllers
         {
 
             await _stationServices.DeleteStationAsync(id);
-            return NoContent();
+            return Ok(new { success = true, data = id, msg = "data deleted success" });
         }
 
         [HttpGet("serachStation/{StationId}")]
-        public async Task<Station> searchStations(int StationId)
+        public async Task<IActionResult> searchStations(int StationId)
         {
-            return await _stationServices.SearchstationsAsync(StationId);
+            //return await _stationServices.SearchstationsAsync(StationId);
 
+            Station station = await _stationServices.SearchstationsAsync(StationId);
+            if (station != null)
+            {
+                return Ok(new { success = true, data = station, msg = "data retrive success" });
+            }
+            else
+            {
+                return BadRequest(new { success = true, data = station, msg = "data retrive failed " });
+            }
+
+        }
+
+        [HttpGet("ownerstations/{ownerid}")]
+        public async Task<IActionResult> getStationsofOwner(string ownerid)
+        {
+            //return await _stationServices.GetstationsAsync();
+
+            List<Station> stationlist = await _stationServices.getstationsofownerAsync(ownerid);
+            if (stationlist != null)
+            {
+                return Ok(new { success = true, data = stationlist, msg = "data retrive success" });
+            }
+            else
+            {
+                return BadRequest(new { success = true, data = stationlist, msg = "data retrive failed " });
+            }
         }
     }
 }

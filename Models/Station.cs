@@ -18,6 +18,8 @@ namespace EADBackend.Models
 
         public int StationId { get; set; }
 
+        public string OwnerId { get; set; }
+
         public string Petrol_available_state { get; set; }
 
         public string Diesel_available_state { get; set; }

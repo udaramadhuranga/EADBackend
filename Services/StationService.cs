@@ -21,24 +21,25 @@ namespace EADBackend.Services
 
         }
 
-        public async Task CreateStationAsync(Station station)
+        public async Task<Station> CreateStationAsync(Station station)
         {
-            await _stationCollection.InsertOneAsync(station);
-            return;
+          await _stationCollection.InsertOneAsync(station);
+            return station;
         }
 
         public async Task<List<Station>> GetstationsAsync()
         {
-            return await _stationCollection.Find(new BsonDocument()).ToListAsync();
+            List<Station> stationlist =  await _stationCollection.Find(new BsonDocument()).ToListAsync();
+            return stationlist;
         }
 
-        public async Task IncrementCars_ququeAsync(string id, Station station)
+        public async Task<Station> IncrementCars_ququeAsync(string id, Station station)
         {
             FilterDefinition<Station> filter = Builders<Station>.Filter.Eq("Id", id);
             UpdateDefinition<Station> update = Builders<Station>.Update.Set("Cars_quque_count", (station.Cars_quque_count +1));
 
             await _stationCollection.UpdateOneAsync(filter, update);
-            return;
+            return station;
 
         }
 
@@ -306,7 +307,17 @@ namespace EADBackend.Services
 
         public async Task<Station> SearchstationsAsync(int stationId)
         {
-            return await _stationCollection.Find(staion=>staion.StationId == stationId).FirstOrDefaultAsync();
+            Station resultstation = await _stationCollection.Find(staion=>staion.StationId == stationId).FirstOrDefaultAsync();
+            return resultstation;
+
         }
+
+        public async Task<List<Station>> getstationsofownerAsync(string ownerid)
+        {
+            List<Station> resultstationlist = await _stationCollection.Find(staion => staion.OwnerId == ownerid).ToListAsync();
+            return resultstationlist;
+
+        }
+
     }
 }
