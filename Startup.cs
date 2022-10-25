@@ -28,9 +28,15 @@ namespace EADBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var _mongodbSettings = Configuration.GetSection("MongoDB").Get<MongoDBSettings>();
             services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDB"));
             services.AddSingleton<MongoDBServices>();
             services.AddSingleton<StationService>();
+            services.AddSingleton<UserService>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>().AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>(
+               _mongodbSettings.CONNECTION_STRING, _mongodbSettings.DATABASE_NAME
+                );
+                services.AddControllersWithViews();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -52,7 +58,9 @@ namespace EADBackend
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+         
 
             app.UseEndpoints(endpoints =>
             {

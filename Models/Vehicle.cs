@@ -16,5 +16,6 @@ namespace EADBackend.Models
         public string Type { get; set; } 
 
         public int Quota { get; set; }
+
     }
 }
