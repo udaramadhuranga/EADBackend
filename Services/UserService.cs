@@ -25,7 +25,7 @@ namespace EADBackend.Services
 
         }
 
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<User> CreateUserAsync(User user) //user create database operation include async function 
         {
             try
             {
@@ -38,7 +38,7 @@ namespace EADBackend.Services
             }
         }
 
-        public async Task<List<User>> GetUrsersAsync()
+        public async Task<List<User>> GetUrsersAsync() //all users reriving database operation include async function 
         {
             try
             {
@@ -51,7 +51,7 @@ namespace EADBackend.Services
         }
 
 
-        public async Task DeleteUserAsync(string id)
+        public async Task DeleteUserAsync(string id) // perticular user delete by id database operation include async function 
         {
             FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
             await _userCollection.DeleteOneAsync(filter);
@@ -72,7 +72,7 @@ namespace EADBackend.Services
         }
 
 
-        public async Task<User> validateUser(string email, string password)
+        public async Task<User> validateUser(string email, string password) //user validation by finding given password and email function 
         {
             try
             {
@@ -86,7 +86,7 @@ namespace EADBackend.Services
 
             }
 
-        public string GenerateJSONWebToken(User users)
+        public string GenerateJSONWebToken(User users)  // JWT for authentiation function reffered https://www.youtube.com/watch?v=XztXkzuJjMU
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("eyJhbGciOiJIUzINi"));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -105,7 +105,7 @@ namespace EADBackend.Services
         }
 
 
-        public async Task<User> GetUrserAsync(string id)
+        public async Task<User> GetUrserAsync(string id)   // user retrive by id function
         {
             try
             {

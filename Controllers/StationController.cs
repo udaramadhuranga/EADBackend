@@ -21,7 +21,7 @@ namespace EADBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> getStations()
+        public async Task<IActionResult> getStations()   // api intergartion for get all stations
         {
             //return await _stationServices.GetstationsAsync();
 
@@ -36,7 +36,7 @@ namespace EADBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> addStation([FromBody] Station station)
+        public async Task<IActionResult> addStation([FromBody] Station station)  //api implentation for station create
         {
             await _stationServices.CreateStationAsync(station);
             return CreatedAtAction(nameof(getStations), new { id = station.Id }, station);
@@ -51,7 +51,7 @@ namespace EADBackend.Controllers
         }
 
         [HttpPut("updatePetrolAvailability/{id}")]
-        public async Task<IActionResult> updatePetralAvailabity(string id, [FromBody] Station station)
+        public async Task<IActionResult> updatePetralAvailabity(string id, [FromBody] Station station) // api inplemetation for petrol avalabity state change
         {
             await _stationServices.Update_Petrol_AvailabilityAsync(id, station);
             return NoContent();
@@ -59,17 +59,17 @@ namespace EADBackend.Controllers
         }
 
         [HttpPut("updateDieselAvailability/{id}/")]
-        public async Task<IActionResult> updateDieselAvailabity(string id, [FromBody] Station station)
+        public async Task<IActionResult> updateDieselAvailabity(string id, [FromBody] Station station)// api inplemetation for diseal avalabity state change
         {
             await _stationServices.Update_diesel_AvailabilityAsync(id, station);
             return NoContent();
 
         }
 
-        //update queque incemently
+        // api forupdate queque incemently
 
         [HttpPut("Iquque/{id}/{quque}")]
-        public async Task<IActionResult> updateIQuque(string id,string quque, [FromBody] Station station)
+        public async Task<IActionResult> updateIQuque(string id,string quque, [FromBody] Station station) 
         {
             await _stationServices.IncrementququeAsync(id, quque, station);
             return NoContent();
@@ -78,7 +78,7 @@ namespace EADBackend.Controllers
 
 
         [HttpPut("Dquque/{id}/{quque}")]
-        public async Task<IActionResult> updateDeQuque(string id, string quque, [FromBody] Station station)
+        public async Task<IActionResult> updateDeQuque(string id, string quque, [FromBody] Station station) //api for decrement vehicle quque
         {
             await _stationServices.DecrementququeAsync(id, quque, station);
             return Ok(new { success = true, data = id, msg = "data updated success" });
@@ -87,7 +87,7 @@ namespace EADBackend.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> deleteStation(string id)
+        public async Task<IActionResult> deleteStation(string id) // api implementation for delete station
         {
 
             await _stationServices.DeleteStationAsync(id);
@@ -95,7 +95,7 @@ namespace EADBackend.Controllers
         }
 
         [HttpGet("serachStation/{StationId}")]
-        public async Task<IActionResult> searchStations(int StationId)
+        public async Task<IActionResult> searchStations(int StationId) //api implelement for search a station facilities user to search station by station id
         {
             //return await _stationServices.SearchstationsAsync(StationId);
 
@@ -112,7 +112,7 @@ namespace EADBackend.Controllers
         }
 
         [HttpGet("ownerstations/{ownerid}")]
-        public async Task<IActionResult> getStationsofOwner(string ownerid)
+        public async Task<IActionResult> getStationsofOwner(string ownerid) // api implementation for get all station of a owner
         {
             //return await _stationServices.GetstationsAsync();
 

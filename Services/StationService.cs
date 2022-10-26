@@ -21,19 +21,19 @@ namespace EADBackend.Services
 
         }
 
-        public async Task<Station> CreateStationAsync(Station station)
+        public async Task<Station> CreateStationAsync(Station station)  //create station database operation include async function
         {
           await _stationCollection.InsertOneAsync(station);
             return station;
         }
 
-        public async Task<List<Station>> GetstationsAsync()
+        public async Task<List<Station>> GetstationsAsync() //retrive all stations database operation include async function
         {
             List<Station> stationlist =  await _stationCollection.Find(new BsonDocument()).ToListAsync();
             return stationlist;
         }
 
-        public async Task<Station> IncrementCars_ququeAsync(string id, Station station)
+        public async Task<Station> IncrementCars_ququeAsync(string id, Station station) //car quque increment by one function
         {
             FilterDefinition<Station> filter = Builders<Station>.Filter.Eq("Id", id);
             UpdateDefinition<Station> update = Builders<Station>.Update.Set("Cars_quque_count", (station.Cars_quque_count +1));
@@ -43,7 +43,7 @@ namespace EADBackend.Services
 
         }
 
-        public async Task IncrementBikes_ququeAsync(string id, Station station)
+        public async Task IncrementBikes_ququeAsync(string id, Station station) 
         {
             FilterDefinition<Station> filter = Builders<Station>.Filter.Eq("Id", id);
             UpdateDefinition<Station> update = Builders<Station>.Update.Set("Bike_quque_count", (station.Bike_quque_count + 1));
@@ -184,7 +184,7 @@ namespace EADBackend.Services
         //gas available state update 
 
 
-        public async Task Update_Petrol_AvailabilityAsync(string id, Station station)
+        public async Task Update_Petrol_AvailabilityAsync(string id, Station station) // pertorl available state update function
         {
             FilterDefinition<Station> filter = Builders<Station>.Filter.Eq("Id", id);
             UpdateDefinition<Station> update = Builders<Station>.Update.Set("Petrol_available_state", station.Petrol_available_state);
@@ -195,7 +195,7 @@ namespace EADBackend.Services
         }
 
 
-        public async Task Update_diesel_AvailabilityAsync(string id, Station station)
+        public async Task Update_diesel_AvailabilityAsync(string id, Station station) // diseal available state update function
         {
             FilterDefinition<Station> filter = Builders<Station>.Filter.Eq("Id", id);
             UpdateDefinition<Station> update = Builders<Station>.Update.Set("Diesel_available_state", station.Diesel_available_state);
@@ -209,7 +209,7 @@ namespace EADBackend.Services
 
 
 
-        public async Task DeleteStationAsync(string id)
+        public async Task DeleteStationAsync(string id) //delete a station by id async function
         {
             FilterDefinition<Station> filter = Builders<Station>.Filter.Eq("Id", id);
             await _stationCollection.DeleteOneAsync(filter);
@@ -305,14 +305,14 @@ namespace EADBackend.Services
 
         //search station
 
-        public async Task<Station> SearchstationsAsync(int stationId)
+        public async Task<Station> SearchstationsAsync(int stationId)  //station searh with station id function
         {
             Station resultstation = await _stationCollection.Find(staion=>staion.StationId == stationId).FirstOrDefaultAsync();
             return resultstation;
 
         }
 
-        public async Task<List<Station>> getstationsofownerAsync(string ownerid)
+        public async Task<List<Station>> getstationsofownerAsync(string ownerid) // stations  retrive of a owner  function
         {
             List<Station> resultstationlist = await _stationCollection.Find(staion => staion.OwnerId == ownerid).ToListAsync();
             return resultstationlist;
