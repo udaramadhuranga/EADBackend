@@ -21,21 +21,21 @@ namespace EADBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Vehicle>> getVehicle()
+        public async Task<List<Vehicle>> getVehicle()  //api for get all vehicles
         {
             return await _mongodbService.GetVehiclesAsync();
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> addVehicle([FromBody] Vehicle vehicle)
+        public async Task<IActionResult> addVehicle([FromBody] Vehicle vehicle) //api for create vehicle category
         {
             await _mongodbService.CreateVehicleAsync(vehicle);
             return CreatedAtAction(nameof(getVehicle), new { id = vehicle.Id }, vehicle);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> updateVehicle(string id, [FromBody] Vehicle vehicle)
+        public async Task<IActionResult> updateVehicle(string id, [FromBody] Vehicle vehicle) //api for update vehicle category
         {
             await _mongodbService.UpdateVehicleAsync(id, vehicle);
             return NoContent(); 
@@ -43,7 +43,7 @@ namespace EADBackend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> deleteVehicle(string id)
+        public async Task<IActionResult> deleteVehicle(string id) //api for delete vehicle chategory.
         {
 
             await _mongodbService.DeleteVehicleAsync(id);
