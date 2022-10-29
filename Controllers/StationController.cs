@@ -28,7 +28,7 @@ namespace EADBackend.Controllers
             List<Station> stationlist = await _stationServices.GetstationsAsync();
             if (stationlist != null)
             {
-                return Ok(new { success = true, data = stationlist, msg = "data retrive success" });
+                return Ok(stationlist);
             }
             else {
                 return BadRequest(new { success = true, data = stationlist, msg = "data retrive failed " });
@@ -39,7 +39,7 @@ namespace EADBackend.Controllers
         public async Task<IActionResult> addStation([FromBody] Station station)  //api implentation for station create
         {
             await _stationServices.CreateStationAsync(station);
-            return CreatedAtAction(nameof(getStations), new { id = station.Id }, station);
+            return Ok(CreatedAtAction(nameof(getStations), new { id = station.Id }, station));
         }
 
         [HttpPut("Icarquque/{id}")]
@@ -54,7 +54,7 @@ namespace EADBackend.Controllers
         public async Task<IActionResult> updatePetralAvailabity(string id, [FromBody] Station station) // api inplemetation for petrol avalabity state change
         {
             await _stationServices.Update_Petrol_AvailabilityAsync(id, station);
-            return NoContent();
+            return Ok(new { success = true,msg = "data retrive success" });
 
         }
 
@@ -62,7 +62,7 @@ namespace EADBackend.Controllers
         public async Task<IActionResult> updateDieselAvailabity(string id, [FromBody] Station station)// api inplemetation for diseal avalabity state change
         {
             await _stationServices.Update_diesel_AvailabilityAsync(id, station);
-            return NoContent();
+            return Ok(new { success = true, msg = "data retrive success" });
 
         }
 
@@ -119,7 +119,7 @@ namespace EADBackend.Controllers
             List<Station> stationlist = await _stationServices.getstationsofownerAsync(ownerid);
             if (stationlist != null)
             {
-                return Ok(new { success = true, data = stationlist, msg = "data retrive success" });
+                return Ok(stationlist);
             }
             else
             {

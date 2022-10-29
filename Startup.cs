@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EADBackend.Models;
 using EADBackend.Services;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -67,5 +68,11 @@ namespace EADBackend
                 endpoints.MapControllers();
             });
         }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+           WebHost.CreateDefaultBuilder(args)
+          .UseUrls()
+          .UseKestrel()
+          .UseStartup<Startup>();
     }
 }

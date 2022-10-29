@@ -31,7 +31,7 @@ namespace EADBackend.Controllers
         public async Task<IActionResult> registerUser([FromBody] User user)  //api impementation for register user 
         {
             var Newuser =  await _userService.CreateUserAsync(user);
-            if (user == null)
+            if (Newuser == null)
             {
                 return BadRequest(new { success = false, data = Newuser, msg = "Registration failed" });
             }
